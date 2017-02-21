@@ -10,6 +10,7 @@ GEN_OPTS__FLAG := --cmd_file="configPkg/compiler.opt"
 GEN_CMDS__FLAG := -l"configPkg/linker.cmd"
 
 ORDERED_OBJS += \
+"./EK_TM4C123GXL.obj" \
 "./PITA_Funct.obj" \
 "./PITA_main.obj" \
 "../EK_TM4C123GXL.cmd" \
@@ -157,8 +158,8 @@ PITA.hex: $(EXE_OUTPUTS)
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)$(GEN_FILES__QUOTED)$(BIN_OUTPUTS__QUOTED)$(GEN_OPTS__QUOTED)$(GEN_CMDS__QUOTED)
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
-	-$(RM) "PITA_Funct.d" "PITA_main.d" 
-	-$(RM) "PITA_Funct.obj" "PITA_main.obj" 
+	-$(RM) "EK_TM4C123GXL.d" "PITA_Funct.d" "PITA_main.d" 
+	-$(RM) "EK_TM4C123GXL.obj" "PITA_Funct.obj" "PITA_main.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

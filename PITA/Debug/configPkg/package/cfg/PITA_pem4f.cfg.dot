@@ -343,9 +343,15 @@ digraph configuration {
         ti_sysbios_hal_Hwi [style=filled,fillcolor=lightgray, label="Hwi"];
         ti_sysbios_hal__top -> ti_sysbios_hal_Hwi[style=invis];
         ti_sysbios_hal_Hwi -> ti_sysbios_hal__bot[style=invis];
+        ti_sysbios_hal_Timer [style=filled,fillcolor=lightgray, label="Timer"];
+        ti_sysbios_hal__top -> ti_sysbios_hal_Timer[style=invis];
+        ti_sysbios_hal_Timer -> ti_sysbios_hal__bot[style=invis];
         ti_sysbios_hal_Hwi_HwiProxy [style=filled,fillcolor=lightgray, label="Hwi_HwiProxy"];
         ti_sysbios_hal__top -> ti_sysbios_hal_Hwi_HwiProxy[style=invis];
         ti_sysbios_hal_Hwi_HwiProxy -> ti_sysbios_hal__bot[style=invis];
+        ti_sysbios_hal_Timer_TimerProxy [style=filled,fillcolor=lightgray, label="Timer_TimerProxy"];
+        ti_sysbios_hal__top -> ti_sysbios_hal_Timer_TimerProxy[style=invis];
+        ti_sysbios_hal_Timer_TimerProxy -> ti_sysbios_hal__bot[style=invis];
     }
     subgraph cluster42 {
         label="";

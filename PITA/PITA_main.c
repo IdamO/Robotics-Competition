@@ -63,6 +63,7 @@ void PITA_standby()
 {
 	char test_mode = 1;
 	if (test_mode){
+		//UARTprintf("\nSystem is in test mode. Starting command line.\n");
 		while (1) {
 		   command_line();
 		}
@@ -79,44 +80,56 @@ void PITA_standby()
 
 void game_nav()
 {
-	int grid = 0;
+	int grid = 41;
 	char tunnel;
+	grid_orientation = 0;
 	while (grid!=6){
 		tunnel = tunnel_check(grid);
 		//if there is a tunnel and it is an edge of the field, look for cache
+		//side edges only; top and bottom edges are checked later
 		if (tunnel){
 			if (grid%7==0 || grid%7==6){
 				cache_check();
 			}
+			tunnel_map[grid] = 1;
 		}
+		// check for obstacles before moving on
 		obstacle_check(grid);
+		// move to next grid
 		move_forward_1ft();
+		// update grid location
 		grid = grid_change(grid,grid_orientation);
+		// mark grid as being travelled to
 		game_field[grid]=1;
-		// if the robot has reached the edge of the field
+		// if the robot has reached the edge of the field (top or bottom of snake)
 		if (grid<=6 || grid>=42){
+			tunnel = tunnel_check(grid);
+			// check top or bottom edge grid for cache if tunnel located
+			if (tunnel){
+				cache_check();
+				tunnel_map[grid] = 1;
+			}
+
 			if (grid_orientation==0){
-				tunnel = tunnel_check(grid);
-				if (tunnel){
-					cache_check();
-				}
 				motor_rotateRight_90();
+				// check for obstacle before moving forward
 				obstacle_check(grid);
 				move_forward_1ft();
+				// update grid location
 				grid = grid_change(grid,grid_orientation);
+				// mark grid as being travelled to
 				game_field[grid]=1;
 				motor_rotateRight_90();
 				grid_orientation=1;
 			}
 			else {
-				tunnel = tunnel_check(grid);
-				if (tunnel){
-					cache_check();
-				}
 				motor_rotateLeft_90();
+				// check for obstacle before moving forward
 				obstacle_check(grid);
 				move_forward_1ft();
+				// update grid location
 				grid = grid_change(grid,grid_orientation);
+				// mark grid as being travelled to
 				game_field[grid]=1;
 				motor_rotateLeft_90();
 				grid_orientation=0;
@@ -195,6 +208,10 @@ char obstacle_check(int currentGrid)
 //---------------------------------------------------------------------------
 char tunnel_check(int currentGrid)
 {
+	uint32_t capData = capacitive_sensor();
+	if (capData < 160){
+		return 1;
+	}
 	return 0;
 }
 
